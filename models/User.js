@@ -12,20 +12,24 @@ const userSchema = new mongoose.Schema({
   },
   phone: {
     type: String,
-    default: ''
+    default: '' // Renamed to Pokégear Number in the UI
   },
   password: {
     type: String,
     required: true,
     select: false
   },
-  language: {
+  // Added language field to maintain API contract
+  language: { 
     type: String,
     default: 'en'
   },
   role: {
     type: String,
-    default: 'user'
+    // Define allowed roles for validation and clarity
+    enum: ['trainer', 'professor'], 
+    // Defaulting to 'trainer' (was 'user')
+    default: 'trainer' 
   }
 }, { timestamps: true });
 

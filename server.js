@@ -21,7 +21,7 @@ app.use('/api/feedback', require('./routes/feedback'));
 // Update the root message for thematic consistency
 app.get('/', (req, res) => {
   res.json({ 
-    message: 'Poké Centre Network API is running and ready for Trainers.', // Themed welcome message
+    message: 'krishipoke API is running and ready for Trainers.', // Themed welcome message
     environment: process.env.NODE_ENV || 'development'
   });
 });

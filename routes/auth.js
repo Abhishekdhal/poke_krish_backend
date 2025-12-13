@@ -3,19 +3,13 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authMiddleware = require('../middleware/auth');
-// Updated middleware import name for consistency with thematic role change
 const professorMiddleware = require('../middleware/admin'); 
 const User = require('../models/User');
 
-// @route POST /api/auth/register
-// @desc Register a new user (Trainer)
 router.post('/register', async (req, res) => {
     try {
-        // Keep language for API contract, but it's hardcoded to 'en' in the frontend now
         const { name, email, phone, password, language } = req.body;
 
-        // Note: Keeping `language` required here to match the frontend API request body, 
-        // but frontend already sends 'en'.
         if (!name || !email || !password || !language) {
             return res.status(400).json({ success: false, message: 'Please enter all required Trainer fields' });
         }
@@ -29,14 +23,13 @@ router.post('/register', async (req, res) => {
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
 
-        // Ensure user is created as a standard 'trainer' role
         const newUser = new User({ 
             name, 
             email, 
             phone: phone || '', 
             password: hashedPassword, 
             language,
-            role: 'trainer' // Explicitly setting the default role
+            role: 'trainer'
         });
         await newUser.save();
 
@@ -55,8 +48,6 @@ router.post('/register', async (req, res) => {
     }
 });
 
-// @route POST /api/auth/login
-// @desc Authenticate user (Trainer) & get token
 router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
@@ -91,8 +82,6 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// @route GET /api/auth/me
-// @desc Get current authenticated user (Trainer) profile
 router.get('/me', authMiddleware, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).select('-password');
@@ -108,11 +97,8 @@ router.get('/me', authMiddleware, async (req, res) => {
     }
 });
 
-// @route PUT /api/auth/update
-// @desc Update user (Trainer) profile
 router.put('/update', authMiddleware, async (req, res) => {
     try {
-        // Language is still accepted to maintain API compatibility, even if UI no longer changes it
         const { name, phone, language } = req.body;
         const updates = {};
 
@@ -129,8 +115,6 @@ router.put('/update', authMiddleware, async (req, res) => {
     }
 });
 
-// @route GET /api/auth/users
-// @desc Get list of all users (Protected by Professor Middleware)
 router.get('/users', authMiddleware, professorMiddleware, async (req, res) => {
     try {
         const users = await User.find().select('-password');
