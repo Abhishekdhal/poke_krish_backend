@@ -4,7 +4,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const authMiddleware = require('../middleware/auth');
 // Updated middleware import name for consistency with thematic role change
-const professorMiddleware = require('../middleware/adminAuth'); 
+const professorMiddleware = require('../middleware/admin'); 
 const User = require('../models/User');
 
 // @route POST /api/auth/register

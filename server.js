@@ -16,7 +16,7 @@ connectDB();
 // Route Mapping - These paths are used by the frontend ApiService
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/feedback', require('./routes/feedback'));
-app.use('/api/problem', require('./routes/problem'));
+// app.use('/api/problem', require('./routes/problem'));
 
 // Update the root message for thematic consistency
 app.get('/', (req, res) => {
