@@ -6,7 +6,12 @@ const mongoose = require('mongoose');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+    origin: '*', // This explicitly allows any domain/host (including your Flutter app)
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow all necessary methods
+    credentials: true,
+}));
+
 app.use(express.json());
 
 app.use('/uploads', express.static('uploads'));
