@@ -8,9 +8,9 @@ const User = require('../models/User');
 
 router.post('/register', async (req, res) => {
     try {
-        const { name, email, phone, password, language } = req.body;
+        const { name, email, phone, password } = req.body;
 
-        if (!name || !email || !password || !language) {
+        if (!name || !email || !password ) {
             return res.status(400).json({ success: false, message: 'Please enter all required Trainer fields' });
         }
 
@@ -28,7 +28,6 @@ router.post('/register', async (req, res) => {
             email, 
             phone: phone || '', 
             password: hashedPassword, 
-            language,
             role: 'trainer'
         });
         await newUser.save();
