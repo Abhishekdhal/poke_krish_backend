@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Feedback = require('../models/Feedback'); // Assuming this model structure is appropriate
+const Feedback = require('../models/Feedback'); 
 
-// @route POST /api/feedback
-// @desc Submit a new Trainer Report (Feedback)
 router.post('/', async (req, res) => {
     try {
-        // Renaming the fields in the body for clarity and capturing the optional image URL
+        
         const { name, message, image_url } = req.body; 
 
         if (!name || !message) {
@@ -16,7 +14,6 @@ router.post('/', async (req, res) => {
         const newFeedback = new Feedback({ 
             name: name, 
             message: message,
-            // Add the optional image_url field to the database entry
             image_url: image_url || null 
         });
         await newFeedback.save();

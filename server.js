@@ -7,8 +7,8 @@ const mongoose = require('mongoose');
 const app = express();
 
 app.use(cors({
-    origin: '*', // This explicitly allows any domain/host (including your Flutter app)
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', // Allow all necessary methods
+    origin: '*', 
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE', 
     credentials: true,
 }));
 
@@ -18,12 +18,9 @@ app.use('/uploads', express.static('uploads'));
 
 connectDB();
 
-// Route Mapping - These paths are used by the frontend ApiService
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/feedback', require('./routes/feedback'));
-// app.use('/api/problem', require('./routes/problem'));
 
-// Update the root message for thematic consistency
 app.get('/', (req, res) => {
   res.json({ 
     message: 'krishipoke API is running and ready for Trainers.', // Themed welcome message
